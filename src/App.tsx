@@ -1,13 +1,8 @@
-
-import Layout from "./components/Layout"
+import Login from "./components/Login"
 
 const App = () => {
   return (
-   <Layout>
-    <h1>Faça o login</h1>
-    <input/>
-    <input/>
-   </Layout>
+      <Login/>
   )
 }
 
