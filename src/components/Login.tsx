@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+"use client";
+
 import {
   Box,
   Button,
@@ -8,93 +9,120 @@ import {
   Text,
   Link,
   Image,
-} from '@chakra-ui/react';
-import { toaster } from './ui/toaster';
+  Stack,
+} from "@chakra-ui/react";
+//import { toaster } from "./ui/toaster";
+import { Field } from "./ui/field";
+import { useForm } from "react-hook-form";
 
-const LoginForm: React.FC = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+interface FormValues {
+  email: string;
+  senha: string;
+}
 
-  const handleLogin = () => {
-    if (email === 'admin@example.com' && password === 'password') {
-        toaster.create({
-        title: 'Login bem-sucedido',
-        description: 'Você foi autenticado com sucesso!',
-        duration: 3000,
-      });
-    } else {
-        toaster.create({
-        title: 'Erro no login',
-        description: 'Credenciais inválidas.',
-        status: 'error',
-        duration: 3000,
-        isClosable: true,
-      });
-    }
-  };
+const Login = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormValues>();
+
+  const onSubmit = handleSubmit((data) => console.log(data));
 
   return (
-    <Flex height="100vh">
-      {/* Lado da Imagem */}
-      <Box
-        flex="1"
-        display={{ base: 'none', md: 'block' }}
-        bg="black"
-        position="relative"
-      >
-        <Image
-          src="/assets/login-image.jpg"
-          alt="Login Illustration"
-          objectFit="cover"
-          width="100%"
-          height="100%"
-        />
-      </Box>
-
-      {/* Lado do Formulário */}
-      <Flex
-        flex="1"
-        align="center"
-        justify="center"
-        bg="gray.950"
-        p={8}
-        shadow="lg"
-      >
-        <Box width="100%" maxW="400px">
-          <Heading mb={6} textAlign="center" color="teal.500" >
-            Bem-vindo de volta!
-          </Heading>
-            <Input
-              mb={2}
-              type="email"
-              placeholder="Digite seu email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            <Input
-              mb={2}
-              type="password"
-              placeholder="Digite sua senha"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          <Button
-            colorScheme="teal"
-            width="full"
-            onClick={handleLogin}
+    <form onSubmit={onSubmit}>
+      <Stack>
+        <Flex height="100vh">
+          {/* Lado da Imagem */}
+          <Box
+            flex="1"
+            display={{ base: "none", md: "block" }}
+            bg="black"
+            position="relative"
           >
-            Entrar
-          </Button>
-          <Text mt={4} textAlign="center">
-            Não tem uma conta?{' '}
-            <Link color="teal.500" href="#">
-              Cadastre-se
-            </Link>
-          </Text>
-        </Box>
-      </Flex>
-    </Flex>
+            <Image
+              src="src/assets/background-login.png"
+              alt="Login Illustration"
+              objectFit="cover"
+              width="100%"
+              height="100%"
+            />
+          </Box>
+
+          {/* Lado do Formulário */}
+          <Flex
+            flex="1"
+            align="center"
+            justify="center"
+            bg="gray.950"
+            p={8}
+            shadow="lg"
+          >
+            <Box width="100%" maxW="400px" fontFamily="Poppins">
+              <Heading
+                mb={6}
+                textAlign="center"
+                color="teal.500"
+                fontWeight="bold"
+                fontSize="3xl"
+              >
+                Bem-vindo de volta👋
+              </Heading>
+              <Text mb={6} textAlign="center">
+                Acesse sua conta e continue sua jornada financeira com segurança
+                e praticidade.
+              </Text>
+              <Field
+                label="Email"
+                invalid={!!errors.email}
+                errorText={errors.email?.message}
+              >
+                <Input
+                  {...register("email", { required: "Digite o seu e-mail" })}
+                  borderStartColor="teal.500"
+                  colorPalette="teal"
+                  mb={6}
+                  type="email"
+                  placeholder="Digite seu email"
+                />
+              </Field>
+              <Field
+                label="Senha"
+                invalid={!!errors.senha}
+                errorText={errors.senha?.message}
+              >
+                <Input
+                  {...register("senha", { required: "Digite sua senha" })}
+                  borderStartColor="teal.500"
+                  colorPalette="teal"
+                  mb={6}
+                  type="password"
+                  placeholder="Digite sua senha"
+                />
+              </Field>
+              <Field>
+                <Button
+                  mb={6}
+                  colorPalette="teal"
+                  colorScheme="teal"
+                  width="full"
+                  type="submit"
+                >
+                  Entrar
+                </Button>
+              </Field>
+              <Text mt={6} textAlign="center">
+                Ainda não tem uma conta?{" "}
+                <Link color="teal.500" href="#">
+                  Crie sua conta agora
+                </Link>
+              </Text>
+            </Box>
+          </Flex>
+        </Flex>
+      </Stack>
+    </form>
   );
 };
 
-export default LoginForm;
+export default Login;
