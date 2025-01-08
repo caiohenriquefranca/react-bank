@@ -73,7 +73,7 @@ const Login = () => {
                 e praticidade.
               </Text>
               <Field
-                label="Email"
+                label="Email:"
                 invalid={!!errors.email}
                 errorText={errors.email?.message}
               >
@@ -87,7 +87,7 @@ const Login = () => {
                 />
               </Field>
               <Field
-                label="Senha"
+                label="Senha:"
                 invalid={!!errors.senha}
                 errorText={errors.senha?.message}
               >
@@ -100,6 +100,9 @@ const Login = () => {
                   placeholder="Digite sua senha"
                 />
               </Field>
+              <Link color="teal.500" href="#" mb="2" ml="15rem" fontSize="sm">
+                  Esqueçeu sua senha?
+                </Link>
               <Field>
                 <Button
                   mb={6}
