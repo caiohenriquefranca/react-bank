@@ -1,6 +1,10 @@
+
+
 import Login from "./components/Login"
 
-const App = () => {
+function App() {
+
+
   return (
       <Login/>
   )
